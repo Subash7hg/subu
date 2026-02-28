@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Diwali & Birthday — Nivi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #ffd166;
+      --muted: rgba(255,255,255,0.9);
+    }
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      color: var(--muted);
+      background: #000;
+    }
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: url('background.jpg') center/cover no-repeat;
+      filter: brightness(0.5) contrast(1.1);
+      z-index: -3;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+      z-index: -2;
+    }
+
+    .firework {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: white;
+      animation: explode 1.5s ease-out infinite;
+    }
+    @keyframes explode {
+      0% { transform: scale(0.2) translate(0,0); opacity: 1; }
+      70% { transform: scale(1) translate(var(--x), var(--y)); opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .card {
+      position: relative;
+      max-width: 850px;
+      margin: 10vh auto;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(255,200,80,0.3);
+      padding: 40px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: #fff;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(255,215,100,0.6);
+    }
+    .sub {
+      color: #ffe8a6;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .message {
+      font-size: 18px;
+      line-height: 1.8;
+      text-align: left;
+      color: rgba(255,255,255,0.9);
+      padding: 0 10px;
+    }
+    .line {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.8s ease;
+      margin-bottom: 14px;
+    }
+    .line.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+    .btn {
+      background: linear-gradient(45deg, #ffd166, #ffb366);
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .small {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #ffeab8;
+    }
+
+    @media (max-width: 700px) {
+      h1 { font-size: 32px; }
+      .message { font-size: 16px; }
+      .card { margin: 8vh 15px; padding: 25px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
+
+  <!-- Fireworks -->
+  <script>
+    function createFirework() {
+      const fw = document.createElement('div');
+      fw.className = 'firework';
+      fw.style.setProperty('--x', `${(Math.random()-0.5)*400}px`);
+      fw.style.setProperty('--y', `${(Math.random()-0.5)*400}px`);
+      fw.style.left = `${50 + (Math.random()*40 - 20)}%`;
+      fw.style.top = `${50 + (Math.random()*40 - 20)}%`;
+      fw.style.background = `hsl(${Math.random()*360},100%,70%)`;
+      fw.style.animationDuration = `${1 + Math.random()*1.5}s`;
+      document.body.appendChild(fw);
+      setTimeout(()=>fw.remove(),2000);
+    }
+    setInterval(createFirework, 300);
+  </script>
+
+  <main class="card">
+    <h1>Happy Diwali & Happy Birthday Nivi</h1>
+    <div class="sub">A little light for a brighter tomorrow ✨</div>
+
+    <section class="message" id="message"></section>
+
+    <div class="controls">
+      <button class="btn" id="playBtn">Play Music</button>
+    </div>
+
+    <div class="small">Advance Birthday: Jan 5th — Shine through every darkness.</div>
+  </main>
+
+  <audio id="bgAudio" src="remo_happy_bday.mp3" loop preload="auto"></audio>
+
+  <script>
+    const lines = [
+      "There are a lot of things to worry in our life but it's Diwali...",
+      "There are a lot of things in my life to worry about but when I think of our memories it makes me a little smile — and that's how we need to move on from the things that hold us back.",
+      "You have a lot to do before that — don't surrender to someone who causes more doubt than comfort.",
+      "Love is all you need but it will find you — don't chase. Let your soul enjoy itself.",
+      "I want to see you succeed. I want to see that you're having your best days.",
+      "I want you to smile in the place you were hurt once.",
+      "You will be loved by someone one day — but before that, don't play all your cards; you might end up choosing someone wrong.",
+      "I won't judge you. I can understand your pain and how badly you want to be loved. One day everything will change.",
+      "Yenna analum — na unnaku irruke. Even when the world turns away, I will be standing beside you to support you. You have my word.",
+      "So don't worry. Advance Happy Birthday and Happy Diwali, uyireey."
+    ];
+
+    const container = document.getElementById('message');
+
+    lines.forEach((text)=>{
+      const p = document.createElement('p');
+      p.className = 'line';
+      p.textContent = text;
+      container.appendChild(p);
+    });
+
+    const lineEls = document.querySelectorAll('.line');
+    let i = 0;
+    function revealNext(){
+      if(i >= lineEls.length) return;
+      lineEls[i].classList.add('show');
+      i++;
+      setTimeout(revealNext, 1500);
+    }
+    setTimeout(revealNext, 800);
+
+    const audio = document.getElementById('bgAudio');
+    const playBtn = document.getElementById('playBtn');
+
+    function playMusic(){
+      audio.volume = 0.4;
+      const playPromise = audio.play();
+      if(playPromise !== undefined){
+        playPromise.then(()=>{ playBtn.textContent = 'Playing...'; playBtn.disabled = true; });
+      }
+    }
+
+    playBtn.addEventListener('click', playMusic);
+    window.addEventListener('load', playMusic);
+  </script>
+</body>
+</html>
